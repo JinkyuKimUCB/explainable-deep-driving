@@ -1,4 +1,4 @@
-# explainable-deep-driving
+# Textual Explanations for Self-Driving Vehicles
 
 This repository contains code for the following paper:
 
