@@ -2,7 +2,7 @@
 
 This repository contains code for the following paper:
 
-Jinkyu Kim, Anna Rohrbach\inst{1,2}, Trevor Darrell, John Canny, Zeynep Akata, Textual Explanations for Self-Driving Vehicles. ECCV 2018.
+Jinkyu Kim, Anna Rohrbach, Trevor Darrell, John Canny, Zeynep Akata, Textual Explanations for Self-Driving Vehicles. ECCV 2018.
 
 ```
 @article{kim2018textual,
