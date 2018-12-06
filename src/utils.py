@@ -23,6 +23,7 @@ import  math
 import  numpy           as np
 from    scipy           import interpolate
 import  cv2
+import  os
 
 class bcolors:
     HEADER  = '\033[95m'
@@ -39,6 +40,11 @@ class dict2(dict):
     def __init__(self, **kwargs):
         dict.__init__(self, kwargs)
         self.__dict__ = self
+
+def check_and_make_folder(path):
+    if not os.path.exists(path): 
+        os.makedirs(path)
+        print(bcolors.BLUE+"Make a folder: {}".format(path)+bcolors.ENDC)
 
 def csv_dict_reader(file_obj):
     """
@@ -127,7 +133,6 @@ def lla2flat(lla, llo, psio, href):
             frame, in meters.
  
     usage: print(lla2flat((0.1, 44.95, 1000.0), (0.0, 45.0), 5.0, -100.0))
- 
     '''
     R = 6378137.0               # Equator radius in meters
     f = 0.00335281066474748071  # 1/298.257223563, inverse flattening
