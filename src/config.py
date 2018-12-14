@@ -26,6 +26,7 @@ if MODE=="CNN":
         "save_steps":   5000,
         "val_steps":    10, #100,
         "model_path":   "./model/CNN/",
-        "pretrained_model_path": None }) 
+        "pretrained_model_path": None,
+        "gpu_fraction": 0.8 }) 
 else:
     raise NotImplementedError

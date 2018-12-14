@@ -2,7 +2,7 @@
 #|**********************************************************************;
 # Project           : Explainable Deep Driving
 #
-# File name         : Step2_train_CNNonly.py
+# File name         : Step2_0_train_CNNonly.py
 #
 # Author            : Jinkyu Kim
 #
@@ -36,11 +36,11 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   # Open a tensorflow session
-  gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.8)
+  gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=config.gpu_fraction)
   sess        = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
-  # Create a CNN+FF (NVIDIA) model
-  USE_SINGLE_FRAME = False      # If true, a single frame is used to predict control commands at each timestep
+  # Create a CNN+FF model
+  USE_SINGLE_FRAME = False      # if False, model use 4 consecutive frames as an input
   NVIDIA_model = NVIDIA_CNN(sess, USE_SINGLE_FRAME=USE_SINGLE_FRAME)
 
   # Preprocessor

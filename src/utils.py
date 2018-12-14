@@ -188,3 +188,56 @@ def get_goalDirection(dist_steps, points):
         goalDirection[idx] = ThetaInDegrees*ThetaSign;
 
     return goalDirection
+
+# given a series and alpha, return series of smoothed points
+def exponential_smoothing(series, alpha):
+    result = [series[0]] # first value is same as series
+    for n in range(1, len(series)):
+        result.append(alpha * series[n] + (1 - alpha) * result[n-1])
+    return np.array(result)
+
+# refine course information
+def preprocess_course(course_value, nImg):
+    nRecords = course_value.shape[0]
+
+    for idx in range(1,nRecords):
+        if course_value[idx] - course_value[idx-1] > 180:
+            course_value[idx:] -= 360
+        elif course_value[idx] - course_value[idx-1] < -180:
+            course_value[idx:] += 360
+
+    # interpolation
+    xaxis         = np.arange(0, nRecords)
+    idxs          = np.linspace(0, nRecords-1, nImg).astype("float")  # approximate alignment
+    course_interp = interpolate.interp1d(xaxis, course_value)
+    course_value  = np.expand_dims(course_interp(idxs),1)
+    
+    # exponential smoothing in reverse order
+    course_value_smooth = np.flip(exponential_smoothing(np.flip(course_value,0), 0.01),0)
+    course_delta        = course_value-course_value_smooth
+
+    return course_delta
+
+# refine other log information
+def preprocess_others(series, nImg):
+    nRecords = series.shape[0]
+
+    # interpolation
+    xaxis         = np.arange(0, nRecords)
+    idxs          = np.linspace(0, nRecords-1, nImg).astype("float")  # approximate alignment
+    series_interp = interpolate.interp1d(xaxis, series)
+    series        = np.expand_dims(series_interp(idxs),1)
+
+    return series
+
+
+
+
+
+
+
+
+
+
+
+
