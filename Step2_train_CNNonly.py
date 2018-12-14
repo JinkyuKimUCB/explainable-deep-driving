@@ -81,7 +81,7 @@ if __name__ == "__main__":
       s=speeds, 
       g=goaldirs )
 
-    if (config.skipvalidate is not True) and (i%config.val_steps==0):
+    if (i%config.val_steps==0):
       X_val, course_val, speed_val, curvature_val, accelerator_val, goaldir_val = next(data_val)
 
       # preprocessing
@@ -98,10 +98,6 @@ if __name__ == "__main__":
         g=goaldirs_val )
 
       print("\rStep {} | train loss: {} | val loss: {} (acc: {}, cur: {})".format( i, l1loss, l1loss_val, l1loss_val_acc, l1loss_val_cur))
-      sys.stdout.flush()
-
-    elif (i%config.val_steps==0):
-      print("\rStep {} | train loss: {}".format( i, l1loss))
       sys.stdout.flush()
 
     if i%config.save_steps==0:

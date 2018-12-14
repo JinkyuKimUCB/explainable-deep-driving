@@ -37,10 +37,10 @@ from    src.preprocessor  import  *
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Path viewer')
-  parser.add_argument('--getscore', type=bool,  default=True,  help='get performance scores')
-  parser.add_argument('--showvideo',type=bool,  default=True,  help='show video')
+  parser.add_argument('--getscore', type=bool,  default=False, help='get performance scores')
+  parser.add_argument('--showvideo',type=bool,  default=False, help='show video')
   parser.add_argument('--useCPU',   type=bool,  default=False, help='without GPU processing')
-  parser.add_argument('--validation',type=bool, default=True,  help='use validation set')
+  parser.add_argument('--validation',type=bool, default=False, help='use validation set')
   parser.add_argument('--extractFeature',type=bool, default=True,  help='extract conv features')
   args = parser.parse_args()
 
@@ -51,7 +51,8 @@ if __name__ == "__main__":
   else:
     raise NotImplementedError
 
-  check_and_make_folder(args.savepath)
+  if args.getscore:       check_and_make_folder(args.savepath)
+  if args.extractFeature: check_and_make_folder(config.h5path + "feat/")
 
   # prepare datasets
   if args.validation: filenames = os.path.join(config.h5path, 'val.txt')
