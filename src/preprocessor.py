@@ -100,15 +100,15 @@ class PreProcessor_CNN_4frame():
 
 
 class PreProcessor_VA():
-    def __init__(self):
+    def __init__(self, timelen=config.timelen):
         # Build the Tensorflow graph
         with tf.variable_scope("pre-processor"):
-            self.inputImg    = tf.placeholder(shape=[None, config.timelen, 64, 12, 20], dtype=tf.float32)
-            self.curvature   = tf.placeholder(shape=[None, config.timelen, 1], dtype=tf.float32)
-            self.accelerator = tf.placeholder(shape=[None, config.timelen, 1], dtype=tf.float32)
-            self.speed       = tf.placeholder(shape=[None, config.timelen, 1], dtype=tf.float32)
-            self.course      = tf.placeholder(shape=[None, config.timelen, 1], dtype=tf.float32)
-            self.goaldir     = tf.placeholder(shape=[None, config.timelen, 1], dtype=tf.float32)
+            self.inputImg    = tf.placeholder(shape=[None, timelen, 64, 12, 20], dtype=tf.float32)
+            self.curvature   = tf.placeholder(shape=[None, timelen, 1], dtype=tf.float32)
+            self.accelerator = tf.placeholder(shape=[None, timelen, 1], dtype=tf.float32)
+            self.speed       = tf.placeholder(shape=[None, timelen, 1], dtype=tf.float32)
+            self.course      = tf.placeholder(shape=[None, timelen, 1], dtype=tf.float32)
+            self.goaldir     = tf.placeholder(shape=[None, timelen, 1], dtype=tf.float32)
 
             # we use 4 consecutive frames, thus we need remove first and last few frames..
             inputImg    = tf.transpose( self.inputImg,      perm=[1,0,2,3,4] )
@@ -120,8 +120,8 @@ class PreProcessor_VA():
 
             # ego-motions
             START_FRAME = 3
-            gather_indices_img  = tf.range(config.timelen-START_FRAME)
-            gather_indices_info = tf.range(START_FRAME, config.timelen) 
+            gather_indices_img  = tf.range(timelen-START_FRAME)
+            gather_indices_info = tf.range(START_FRAME, timelen) 
 
             inputImg    = tf.transpose(tf.gather(inputImg, gather_indices_img),     perm=[1,0,2,3,4])
             curvature   = tf.transpose(tf.gather(curvature, gather_indices_info),   perm=[1,0,2])
@@ -131,7 +131,7 @@ class PreProcessor_VA():
             goaldir     = tf.transpose(tf.gather(goaldir, gather_indices_info),     perm=[1,0,2])
 
             # feats
-            dst = tf.reshape(   inputImg, [config.batch_size, config.timelen-START_FRAME, 64, 12*20] )
+            dst = tf.reshape(   inputImg, [config.batch_size, timelen-START_FRAME, 64, 12*20] )
             dst = tf.reshape(   dst, [-1,64,12*20] )
             dst = tf.transpose( dst, [0,2,1] )
             self.outImg = dst

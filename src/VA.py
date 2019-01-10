@@ -224,7 +224,7 @@ class VA(object):
       y_course_list.append(logits_course)
       alpha_list.append(alpha)
 
-    alphas    = tf.transpose(tf.pack(alpha_list), (1,0,2))
+    alphas    = tf.transpose(tf.stack(values=alpha_list), (1,0,2))
     ys_acc    = tf.squeeze(y_acc_list)
     ys_course = tf.squeeze(y_course_list)
 

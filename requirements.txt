@@ -7,3 +7,4 @@ h5py
 scikit-video
 tensorflow
 matplotlib
+zmq

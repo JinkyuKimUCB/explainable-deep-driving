@@ -37,11 +37,12 @@ from    src.preprocessor  import  *
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(description='Path viewer')
-  parser.add_argument('--getscore', type=bool,  default=False, help='get performance scores')
-  parser.add_argument('--showvideo',type=bool,  default=False, help='show video')
-  parser.add_argument('--useCPU',   type=bool,  default=False, help='without GPU processing')
-  parser.add_argument('--validation',type=bool, default=False, help='use validation set')
+  parser.add_argument('--getscore',      type=bool, default=False, help='get performance scores')
+  parser.add_argument('--showvideo',     type=bool, default=False, help='show video')
+  parser.add_argument('--useCPU',        type=bool, default=False, help='without GPU processing')
+  parser.add_argument('--validation',    type=bool, default=False, help='use validation set')
   parser.add_argument('--extractFeature',type=bool, default=True,  help='extract conv features')
+  parser.add_argument('--gpu_fraction',  type=float,default=0.7,   help='GPU usage limit')
   args = parser.parse_args()
 
   if platform == 'darwin':
@@ -66,7 +67,7 @@ if __name__ == "__main__":
     tfconfig = tf.ConfigProto( device_count={'GPU':0}, intra_op_parallelism_threads=3)
     sess = tf.Session(config=tfconfig)
   else: # Use GPU
-    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=config.gpu_fraction)
+    gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=args.gpu_fraction)
     sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
   # Create a CNN+FF model
@@ -104,7 +105,7 @@ if __name__ == "__main__":
 
     if args.extractFeature: feats = []
 
-    for i in tqdm(range(0, nImg-4)):
+    for i in tqdm(range(0, nImg-3)):
       img        = cam['X'][i:i+4]
 
       # ego-motions
