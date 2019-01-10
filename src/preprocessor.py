@@ -100,7 +100,7 @@ class PreProcessor_CNN_4frame():
 
 
 class PreProcessor_VA():
-    def __init__(self, timelen=config.timelen):
+    def __init__(self, timelen=config.timelen, phase='train'):
         # Build the Tensorflow graph
         with tf.variable_scope("pre-processor"):
             self.inputImg    = tf.placeholder(shape=[None, timelen, 64, 12, 20], dtype=tf.float32)
@@ -118,17 +118,20 @@ class PreProcessor_VA():
             course      = tf.transpose( self.course,        perm=[1,0,2] )
             goaldir     = tf.transpose( self.goaldir,       perm=[1,0,2] )
 
-            # ego-motions
-            START_FRAME = 3
-            gather_indices_img  = tf.range(timelen-START_FRAME)
-            gather_indices_info = tf.range(START_FRAME, timelen) 
+            if phase == 'train':
+                # ego-motions
+                START_FRAME = 3
+                gather_indices_img  = tf.range(timelen-START_FRAME)
+                gather_indices_info = tf.range(START_FRAME, timelen) 
 
-            inputImg    = tf.transpose(tf.gather(inputImg, gather_indices_img),     perm=[1,0,2,3,4])
-            curvature   = tf.transpose(tf.gather(curvature, gather_indices_info),   perm=[1,0,2])
-            accelerator = tf.transpose(tf.gather(accelerator, gather_indices_info), perm=[1,0,2])
-            speed       = tf.transpose(tf.gather(speed, gather_indices_info),       perm=[1,0,2])
-            course      = tf.transpose(tf.gather(course, gather_indices_info),      perm=[1,0,2])
-            goaldir     = tf.transpose(tf.gather(goaldir, gather_indices_info),     perm=[1,0,2])
+                inputImg    = tf.transpose(tf.gather(inputImg, gather_indices_img),     perm=[1,0,2,3,4])
+                curvature   = tf.transpose(tf.gather(curvature, gather_indices_info),   perm=[1,0,2])
+                accelerator = tf.transpose(tf.gather(accelerator, gather_indices_info), perm=[1,0,2])
+                speed       = tf.transpose(tf.gather(speed, gather_indices_info),       perm=[1,0,2])
+                course      = tf.transpose(tf.gather(course, gather_indices_info),      perm=[1,0,2])
+                goaldir     = tf.transpose(tf.gather(goaldir, gather_indices_info),     perm=[1,0,2])
+            else:
+                START_FRAME = 0
 
             # feats
             dst = tf.reshape(   inputImg, [config.batch_size, timelen-START_FRAME, 64, 12*20] )
@@ -162,6 +165,4 @@ class PreProcessor_VA():
                 self.goaldir:       goaldir }
 
         return sess.run([self.outImg, self.curvature_, self.accelerator_, self.speed_, self.course_, self.curvature_mask, self.goaldir_, self.discrete_action], feed)
-
-
 
