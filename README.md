@@ -12,4 +12,9 @@ Jinkyu Kim, Anna Rohrbach, Trevor Darrell, John Canny, Zeynep Akata, Textual Exp
   year={2018}
 }
 ```
-The code and data will be updated soon!
+
+### BDD-X dataset
+BDD-X dataset is available at [BDD-X](https://github.com/JinkyuKimUCB/BDD-X-dataset.git).
+
+### 
+The code and readme will be updated soon!
