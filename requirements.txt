@@ -5,6 +5,6 @@ numpy
 opencv-python
 h5py
 scikit-video
-tensorflow
+tensorflow-gpu
 matplotlib
 zmq

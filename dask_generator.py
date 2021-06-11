@@ -113,7 +113,7 @@ def concatenate(camera_names, time_len):
     except IOError:
       import traceback
       traceback.print_exc()
-      print "failed to open", tword
+      print ("failed to open", tword)
 
   course      = np.concatenate(course,      axis=0)
   speed       = np.concatenate(speed,       axis=0)
@@ -122,7 +122,7 @@ def concatenate(camera_names, time_len):
   goaldir     = np.concatenate(goaldir,     axis=0)
   filters     = np.concatenate(filters,     axis=0).ravel()
 
-  print "training on %d/%d examples" % (filters.shape[0], course.shape[0])
+  print ("training on %d/%d examples" % (filters.shape[0], course.shape[0]))
 
   return c5x, course, speed, curvature, accelerator, filters, hdf5_camera, goaldir
 
@@ -205,12 +205,12 @@ def datagen(filter_files, time_len=1, batch_size=256, ignore_goods=False):
       print("%5.2f ms" % ((time.time()-start)*1000.0))
 
       if first:
-        print "X",            X_batch.shape
-        print "angle",        course_batch.shape
-        print "speed",        speed_batch.shape
-        print "curvature",    curvature_batch.shape
-        print "accelerator",  accelerator_batch.shape
-        print "goaldir",      goaldir_batch.shape
+        print ("X",            X_batch.shape)
+        print ("angle",        course_batch.shape)
+        print ("speed",        speed_batch.shape)
+        print ("curvature",    curvature_batch.shape)
+        print ("accelerator",  accelerator_batch.shape)
+        print ("goaldir",      goaldir_batch.shape)
         first = False
 
       yield (X_batch, course_batch, speed_batch, curvature_batch, accelerator_batch, goaldir_batch)

@@ -26,7 +26,7 @@ from    src.utils       import *
 # Main function
 #----------------------------------------------------------------------
 if __name__ == "__main__":
-    if platform == 'darwin':
+    if platform == 'linux':
         config = dict2(**{
             "annotations": './data/Sample.csv',     # contains (video url, start, end, action, justification)
             "vid_path":    './data/Videos/videos/'})
