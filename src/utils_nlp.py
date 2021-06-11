@@ -28,8 +28,8 @@ from    sklearn.feature_extraction.text import TfidfVectorizer
 from    collections     import Counter
 import  numpy           as np
 import  h5py
-import  cPickle         as     pickle
-# import  pickle         as     cPickle
+# import  cPickle         as     pickle
+import  _pickle         as     cPickle
 
 def process_caption_data(caption_file, image_dir, max_length):
     with open(caption_file) as f:

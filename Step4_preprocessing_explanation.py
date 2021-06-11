@@ -28,7 +28,7 @@ def main():
     #-----------------------
     # Parameters
     #-----------------------
-    if platform == 'win32':
+    if platform == 'linux':
         param = dict2(**{
             "max_length":       20,    # the maximum length of sentences
             "vid_max_length":   10,    # the maximum length of video sequences
