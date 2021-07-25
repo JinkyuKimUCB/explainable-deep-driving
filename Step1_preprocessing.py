@@ -106,13 +106,13 @@ if __name__ == "__main__":
 
                 # MuteVideo data set seems to have different label format.
                 # Will use first eight codes
-                #json2read = glob.glob('%sinfo/*/*%s*.json'%(config.data_path, vidName[:8]))
-                #if json2read:
-                #    json2read = json2read[0]
-                #else:
-                #    print( bcolors.FAIL + "Unable to read json file: {}".format(str2find) + bcolors.ENDC )
-                #    vidNames_notUSED.append(str(videoid) + "_" + str(vidName))
-                #    continue
+                json2read = glob.glob('%sinfo/*/*%s*.json'%(config.data_path, vidName[:8]))
+                if json2read:
+                   json2read = json2read[0]
+                else:
+                   print( bcolors.FAIL + "Unable to read json file: {}".format(str2find) + bcolors.ENDC )
+                   vidNames_notUSED.append(str(videoid) + "_" + str(vidName))
+                   continue
 
             # keys: timestamp, longitude, course, latitude, speed, accuracy
             timestamp, longitude, course, latitude, speed, accuracy, gps_x, gps_y = [], [], [], [], [], [], [], []

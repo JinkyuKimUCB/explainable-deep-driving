@@ -36,7 +36,7 @@ if __name__ == "__main__":
   args = parser.parse_args()
 
   # Open a tensorflow session
-  gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=config.gpu_fraction)
+  gpu_options = tf.GPUOptions() #per_process_gpu_memory_fraction=config.gpu_fraction
   sess        = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
   # Create a CNN+FF model

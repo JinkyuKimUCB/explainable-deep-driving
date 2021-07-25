@@ -18,7 +18,7 @@
 # Tested on Tensorflow v1.12
 #|**********************************************************************;
 
-import tensorflow           as      tf
+import tensorflow as tf
 from   src.config           import  *
 
 class NVIDIA_CNN(object):
