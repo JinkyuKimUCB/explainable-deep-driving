@@ -3,7 +3,7 @@
 Helper funtions for steering angle prediction model
 """
 
-import  tensorflow   as     tf
+import  tensorflow.compat.v1   as     tf
 from   	src.config   import *
 
 class PreProcessor_CNN():
